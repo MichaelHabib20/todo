@@ -1,0 +1,67 @@
+<div class="col-12 col-md-6 col-lg-4 todo-item">
+    <div class="card h-100 border-0 shadow-sm hover-card">
+      <div class="card-body p-4">
+        <div class="d-flex flex-column h-100">
+          <div class="mb-3">
+            <h3 class="card-title h5 fw-bold mb-2">{{ todo.title }}</h3>
+         
+            <p class="card-text text-muted mb-3 text-decoration-none" matTooltipPosition="above"  [matTooltip]="todo.description!" style="transition: color 0.2s ease-in-out;" onmouseover="this.style.color='#6c757d'" onmouseout="this.style.color='#6c757d80'">{{ todo.description! | truncate:95 }}</p>
+            
+            <div class="d-flex gap-2 mb-3">
+              <span class="badge rounded-pill px-3 py-2"
+                    [ngClass]="{
+                      'bg-warning-subtle text-warning-emphasis': todo.priority === 0,
+                      'bg-info-subtle text-info-emphasis': todo.priority === 1,
+                      'bg-danger-subtle text-danger-emphasis': todo.priority === 2
+                    }">
+                {{ todo.priority | priorty }}
+              </span>
+              <span class="badge rounded-pill px-3 py-2"
+                    [ngClass]="{
+                      'bg-secondary-subtle text-secondary-emphasis': todo.status === 0,
+                      'bg-primary-subtle text-primary-emphasis': todo.status === 1,
+                      'bg-success-subtle text-success-emphasis': todo.status === 2
+                    }">
+                {{ todo.status | status }}
+              </span>
+            </div>
+            
+            <div class="small text-muted mb-3">
+              <p class="mb-1 d-flex align-items-center">
+                <i class="bi bi-calendar-plus me-2"></i>
+                Created: {{ todo.createdDate | date:'dd/MM/yyyy' }}
+              </p>
+              <p class="mb-1 d-flex align-items-center" *ngIf="todo.lastModifiedDate">
+                <i class="bi bi-pencil me-2"></i>
+                Modified: {{ todo.lastModifiedDate | date:'dd/MM/yyyy' }}
+              </p>
+              <p class="mb-0 d-flex align-items-center" *ngIf="todo.dueDate">
+                <i class="bi bi-clock me-2"></i>
+                Due: {{ todo.dueDate | date:'dd/MM/yyyy' }}
+              </p>
+            </div>
+          </div>
+          
+          <div class="mt-auto">
+            <div class="d-flex gap-2">
+              <select [(ngModel)]="todo.status" 
+                      (change)="updateTodo(todo)"
+                      class="form-select form-select-sm border-0 bg-light">
+                <option [value]="0">Pending</option>
+                <option [value]="1">In Progress</option>
+                <option [value]="2">Completed</option>
+              </select>
+              <button (click)="routeToEdit(todo)"
+                  class="btn">
+                  <mat-icon class="text-secondary fs-3 material-icons-outlined">edit</mat-icon>
+              </button>
+              <button (click)="deleteTodo(todo.id)"
+                  class="btn">
+                  <mat-icon class="text-danger fs-3 material-icons-outlined">delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>

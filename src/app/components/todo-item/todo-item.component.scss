@@ -1,0 +1,27 @@
+.hover-card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  }
+}
+
+.card {
+  .badge {
+    font-size: 0.875rem;
+  }
+  
+  .material-icons-outlined {
+    font-size: 1.5rem;
+  }
+  
+  .form-select {
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}
+.todo-item{
+    width: 100%;
+}
