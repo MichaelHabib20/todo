@@ -9,90 +9,17 @@ import { HttpClientModule } from '@angular/common/http';
 export class TodoService {
   private todos: Todo[] = [];
   private todosSubject = new BehaviorSubject<Todo[]>([]);
-private baseUrl = 'http://localhost:3000/api/Todos';
+private baseUrl = 'https://localhost:44377/api/Todos';
   constructor(private http: HttpClient) {
     // Initialize with some sample data
-    this.addTodo({
-      id: '1',
-      title: 'Sample Todo',
-      description: 'This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item' ,
-      status: 1,
-      priority:2,
-      createdDate: new Date(),
-      lastModifiedDate: new Date()
-    });
-    this.addTodo({
-      id: '1',
-      title: 'Sample Todo',
-      description: 'This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item' ,
-      status: 1,
-      priority:2,
-      createdDate: new Date(),
-      lastModifiedDate: new Date()
-    });
-    this.addTodo({
-      id: '1',
-      title: 'Sample Todo',
-      description: 'This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item' ,
-      status: 1,
-      priority:2,
-      createdDate: new Date(),
-      lastModifiedDate: new Date()
-    });
-    this.addTodo({
-      id: '1',
-      title: 'Sample Todo',
-      description: 'This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item' ,
-      status: 1,
-      priority:2,
-      createdDate: new Date(),
-      lastModifiedDate: new Date()
-    });
-    this.addTodo({
-      id: '1',
-      title: 'Sample Todo',
-      description: 'This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item' ,
-      status: 1,
-      priority:2,
-      createdDate: new Date(),
-      lastModifiedDate: new Date()
-    });
-    this.addTodo({
-      id: '1',
-      title: 'Sample Todo',
-      description: 'This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item' ,
-      status: 1,
-      priority:2,
-      createdDate: new Date(),
-      lastModifiedDate: new Date()
-    });
-    this.addTodo({
-      id: '1',
-      title: 'Sample Todo',
-      description: 'This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item' ,
-      status: 1,
-      priority:2,
-      createdDate: new Date(),
-      lastModifiedDate: new Date()
-    });
-    this.addTodo({
-      id: '1',
-      title: 'Sample Todo',
-      description: 'This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item This is a sample todo item' ,
-      status: 1,
-      priority:2,
-      createdDate: new Date(),
-      lastModifiedDate: new Date()
-    });
   }
 
-  getTodos(): Observable<Todo[]> {
-    return this.todosSubject.asObservable();
+  getTodos(): Observable<any> {
+    return this.http.get(`${this.baseUrl}`)
   }
 
-  addTodo(todo: Todo): void {
-    this.todos.push(todo);
-    this.todosSubject.next([...this.todos]);
+  addTodo(todo: Todo): Observable<any> {
+    return this.http.post(`${this.baseUrl}`, todo);
   }
 
   updateTodo(todo: Todo): Observable<any> {
@@ -103,7 +30,7 @@ private baseUrl = 'http://localhost:3000/api/Todos';
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
 
-  getTodoById(id: string): Todo | undefined {
-    return this.todos.find(todo => todo.id === id);
+  getTodoById(id: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${id}`)
   }
-} 
+}

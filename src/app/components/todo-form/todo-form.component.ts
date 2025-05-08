@@ -37,11 +37,11 @@ export class TodoFormComponent implements OnInit {
   dateNotInPastValidator() {
     return (control: AbstractControl): ValidationErrors | null => {
       if (!control.value) return null;
-      
+
       const selectedDate = new Date(control.value);
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-      
+
       return selectedDate < today ? { dateInPast: true } : null;
     };
   }
@@ -51,46 +51,66 @@ export class TodoFormComponent implements OnInit {
     this.isEditMode = !!this.todoId;
 
     if (this.isEditMode && this.todoId) {
-      const todo = this.todoService.getTodoById(this.todoId);
-      if (todo) {
-        this.todoForm.patchValue({
-          title: todo.title,
-          description: todo.description,
-          priority: todo.priority,
-          dueDate: todo.dueDate ? todo.dueDate.toISOString().split('T')[0] : ''
-        });
-      } else {
-        // If todo not found, redirect to home
-        this.router.navigate(['/']);
+      this.todoService.getTodoById(this.todoId).subscribe({
+        next: (response) => {
+          this.setFormsValue(response)
+
+        },
+        error: (err) => {
+          console.error('حدث خطأ أثناء إضافة المهمة', err);
+        },
+      })
+
       }
-    }
+
   }
 
   onSubmit(): void {
     if (this.todoForm.valid) {
       const formValue = this.todoForm.value;
-      const todo: Todo = {
-        id: this.isEditMode ? this.todoId! : crypto.randomUUID(),
+      let todo: Todo = {
         title: formValue.title,
         description: formValue.description,
         status: 1,
-        priority: formValue.priority,
+        priority: Number(formValue.priority),
         dueDate: formValue.dueDate ,
-        createdDate: this.isEditMode ? new Date() : new Date(),
-        lastModifiedDate: new Date()
       };
-      
+
       if (this.isEditMode) {
-        this.todoService.updateTodo(todo);
+        todo.id = this.todoId!
+        this.todoService.updateTodo(todo).subscribe({
+          next: (response) => {
+            console.log('Updated Succssfully', response);
+            this.router.navigate(['/'])
+
+          },
+          error: (err) => {
+            console.error('حدث خطأ أثناء إضافة المهمة', err);
+          },
+        })
       } else {
-        this.todoService.addTodo(todo);
+        console.log(todo)
+        this.todoService.addTodo(todo).subscribe({
+          next: (response) => {
+            console.log('Inserted Succssfully', response);
+            this.router.navigate(['/'])
+
+          },
+          error: (err) => {
+            console.error('حدث خطأ أثناء إضافة المهمة', err);
+          },
+        });
+
       }
-      
+
       this.router.navigate(['/']);
     }
   }
 
   navigateToHome() {
     this.router.navigate(['/']);
+  }
+  setFormsValue(response : any){
+    this.todoForm.patchValue(response)
   }
 }

@@ -7,7 +7,7 @@
   <div class="row g-4">
     <ng-container *ngFor="let todo of todos">
         <div class="col-md-4">
-            <app-todo-item [todo]="todo"></app-todo-item>
+            <app-todo-item [todo]="todo" (getTodos)="getTodos()" ></app-todo-item>
         </div>
     </ng-container>
   </div>

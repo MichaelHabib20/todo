@@ -29,41 +29,35 @@ export class BootstrapTodoListComponent implements OnInit {
   constructor(private todoService: TodoService, private router: Router) {}
 
   ngOnInit(): void {
-    this.todoService.getTodos().subscribe(todos => {
-      this.todos = todos;
-      this.originalTodos = [...todos];
+    console.log('s')
+    this.getTodos()
+  }
+
+
+
+  updateTodo(todo: Todo): void {
+    this.todoService.updateTodo(todo).subscribe({
+      next: (response) => {
+        console.log('Updated Succssfully', response);
+
+      },
+      error: (err) => {
+        console.error('حدث خطأ أثناء إضافة المهمة', err);
+      },
     });
   }
 
-  addTodo(): void {
-    if (this.newTodo.title) {
-      const todo: Todo = {
-        id: crypto.randomUUID(),
-        title: this.newTodo.title,
-        description: this.newTodo.description,
-        status: 1,
-        priority: 2,
-        dueDate: this.newTodo.dueDate,
-        createdDate: new Date(),
-        lastModifiedDate: new Date()
-      };
-      
-      this.todoService.addTodo(todo);
-      this.newTodo = {
-        title: '',
-        description: '',
-        priority: 2,
-        status: 1
-      };
-    }
-  }
-
-  updateTodo(todo: Todo): void {
-    this.todoService.updateTodo(todo);
-  }
-
   deleteTodo(id: string): void {
-    this.todoService.deleteTodo(id);
+    this.todoService.deleteTodo(id).subscribe({
+      next: (response) => {
+        console.log('Deleted Succssfully', response);
+
+      },
+      error: (err) => {
+        console.error('حدث خطأ أثناء إضافة المهمة', err);
+      },
+
+    })
   }
   openAddTodo(): void {
     this.router.navigate(['/add']);
@@ -92,4 +86,14 @@ export class BootstrapTodoListComponent implements OnInit {
       return matchesFilter;
     });
   }
-} 
+  getTodos(){
+    this.todoService.getTodos().subscribe({
+      next: (response) => {
+        this.todos = response;
+        this.originalTodos = [...response];      },
+      error: (err) => {
+        console.error('حدث خطأ أثناء إضافة المهمة', err);
+      },
+    })
+  }
+}

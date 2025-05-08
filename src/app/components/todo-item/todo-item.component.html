@@ -4,9 +4,9 @@
         <div class="d-flex flex-column h-100">
           <div class="mb-3">
             <h3 class="card-title h5 fw-bold mb-2">{{ todo.title }}</h3>
-         
+
             <p class="card-text text-muted mb-3 text-decoration-none" matTooltipPosition="above"  [matTooltip]="todo.description!" style="transition: color 0.2s ease-in-out;" onmouseover="this.style.color='#6c757d'" onmouseout="this.style.color='#6c757d80'">{{ todo.description! | truncate:95 }}</p>
-            
+
             <div class="d-flex gap-2 mb-3">
               <span class="badge rounded-pill px-3 py-2"
                     [ngClass]="{
@@ -25,7 +25,7 @@
                 {{ todo.status | status }}
               </span>
             </div>
-            
+
             <div class="small text-muted mb-3">
               <p class="mb-1 d-flex align-items-center">
                 <i class="bi bi-calendar-plus me-2"></i>
@@ -41,10 +41,10 @@
               </p>
             </div>
           </div>
-          
+
           <div class="mt-auto">
             <div class="d-flex gap-2">
-              <select [(ngModel)]="todo.status" 
+              <select [(ngModel)]="todo.status"
                       (change)="updateTodo(todo)"
                       class="form-select form-select-sm border-0 bg-light">
                 <option [value]="0">Pending</option>
@@ -55,7 +55,7 @@
                   class="btn">
                   <mat-icon class="text-secondary fs-3 material-icons-outlined">edit</mat-icon>
               </button>
-              <button (click)="deleteTodo(todo.id)"
+              <button (click)="deleteTodo(todo.id!)"
                   class="btn">
                   <mat-icon class="text-danger fs-3 material-icons-outlined">delete</mat-icon>
               </button>

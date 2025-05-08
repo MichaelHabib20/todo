@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,7 +21,8 @@ import { Router } from '@angular/router';
 })
 export class TodoItemComponent {
   @Input() todo!: Todo;
-  TodoPriority = TodoPriority;
+  @Output() getTodos = new EventEmitter<any>();
+    TodoPriority = TodoPriority;
   TodoStatus = TodoStatus;
   constructor(private todoService: TodoService, private snackBar: MatSnackBar, private router: Router) { }
 
@@ -29,7 +30,7 @@ export class TodoItemComponent {
   updateTodo(todo: Todo): void {
     this.todoService.updateTodo(todo).subscribe((response) => {
       if (response) {
-        this.todoService.getTodos();
+        this.getTodos.emit()
         this.snackBar.open('Todo updated successfully', 'Close', {
           duration: 3000,
         });
@@ -39,15 +40,18 @@ export class TodoItemComponent {
 
   deleteTodo(id: string): void {
     this.todoService.deleteTodo(id).subscribe((response) => {
-      if (response) {
-        this.todoService.getTodos();
+      console.log(response)
+      // if (response) {
+        this.getTodos.emit()
         this.snackBar.open('Todo deleted successfully', 'Close', {
           duration: 3000,
         });
-      }
+      // }
     });
   }
   routeToEdit(todo: Todo): void {
+    console.log(todo)
     this.router.navigate(['/edit', todo.id]);
   }
+
 }
