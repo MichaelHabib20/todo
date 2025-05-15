@@ -11,12 +11,12 @@ export enum TodoPriority {
 }
 
 export interface Todo {
-  id: string;
+  id?: string;
   title: string;
   description?: string;
   status: number;
   priority: number;
   dueDate?: Date;
-  createdDate: Date;
-  lastModifiedDate: Date;
-} 
+  createdDate?: Date;
+  lastModifiedDate?: Date;
+}
