@@ -89,7 +89,6 @@ export class TodoFormComponent implements OnInit {
           },
         })
       } else {
-        console.log(todo)
         this.todoService.addTodo(todo).subscribe({
           next: (response) => {
             console.log('Inserted Succssfully', response);

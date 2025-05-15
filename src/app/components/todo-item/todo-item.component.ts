@@ -28,6 +28,7 @@ export class TodoItemComponent {
 
 
   updateTodo(todo: Todo): void {
+    todo.status = Number(todo.status)
     this.todoService.updateTodo(todo).subscribe((response) => {
       if (response) {
         this.getTodos.emit()

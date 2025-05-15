@@ -45,7 +45,7 @@ export class BootstrapTodoListComponent implements OnInit {
         console.error('حدث خطأ أثناء إضافة المهمة', err);
       },
     });
-    
+
   }
 
   deleteTodo(id: string): void {
@@ -88,13 +88,21 @@ export class BootstrapTodoListComponent implements OnInit {
     });
   }
   getTodos(){
+    console.log('w')
+        setTimeout(() => {
     this.todoService.getTodos().subscribe({
       next: (response) => {
+            console.log('w')
+
         this.todos = response;
-        this.originalTodos = [...response];      },
+        console.log(this.todos[2])
+        this.originalTodos = [...response];
+         },
       error: (err) => {
         console.error('حدث خطأ أثناء إضافة المهمة', err);
       },
     })
+            }, 1000);
+
   }
 }

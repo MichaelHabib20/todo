@@ -47,9 +47,9 @@
               <select [(ngModel)]="todo.status"
                       (change)="updateTodo(todo)"
                       class="form-select form-select-sm border-0 bg-light">
-                <option [value]="0">Pending</option>
-                <option [value]="1">In Progress</option>
-                <option [value]="2">Completed</option>
+                <option value=0>Pending</option>
+                <option value=1>In Progress</option>
+                <option value=2>Completed</option>
               </select>
               <button (click)="routeToEdit(todo)"
                   class="btn">
